@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "moc-kk",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "next": "15.0.3",
+    "primeicons": "^7.0.0",
+    "primereact": "^10.8.4",
     "react": "^18.2.0",
     "react-dom": "^18.3.1"
   },
