@@ -15,7 +15,8 @@
     ],
     "button-type": "off"
 =======
-    "no-inline-styles": "off"
+    "no-inline-styles": "off",
+    "axe/forms": "off"
 >>>>>>> fcb6b4c ([UPDATE] productMange.tsx for update and delete button in ProductTable.tsx)
   }
 }
