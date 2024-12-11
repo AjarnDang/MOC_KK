@@ -142,7 +142,7 @@ const ProductTable: React.FC = () => {
           </Table.HeadCell>
           <Table.HeadCell>รูปภาพ</Table.HeadCell>
           <Table.HeadCell
-            onClick={() => handleSort("product", "string")}
+            onClick={() => handleSort("title", "string")}
             className="cursor-pointer gap-2"
           >
             <span className="flex gap-2">
