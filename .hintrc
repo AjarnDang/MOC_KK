@@ -4,6 +4,7 @@
   ],
   "hints": {
     "typescript-config/consistent-casing": "off",
+<<<<<<< HEAD
     "no-inline-styles": "off",
     "axe/forms": "off",
     "axe/name-role-value": [
@@ -13,5 +14,8 @@
       }
     ],
     "button-type": "off"
+=======
+    "no-inline-styles": "off"
+>>>>>>> fcb6b4c ([UPDATE] productMange.tsx for update and delete button in ProductTable.tsx)
   }
 }

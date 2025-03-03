@@ -46,10 +46,10 @@ export type Product = {
 export const fetchProducts = async (): Promise<Product[]> => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/products`
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/Product`
     );
     // console.log('response.data.products', response.data.products)
-    return response.data.products;
+    return response.data;
   } catch (error) {
     console.error("Error fetching products:", error);
     throw error;
@@ -60,7 +60,7 @@ export const fetchProducts = async (): Promise<Product[]> => {
 export const fetchProductById = async (id: string): Promise<Product> => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/product/${id}`
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/Product/${id}`
     );
     return response.data;
   } catch (error) {
@@ -75,7 +75,7 @@ export const createProduct = async (
 ): Promise<Product> => {
   try {
     const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/product`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/Product`,
       product
     );
     return response.data;
@@ -89,7 +89,7 @@ export const createProduct = async (
 export const updateProduct = async (id: string, product: Partial<Product>) => {
   try {
     const response = await axios.put(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/products/${id}`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/Product/${id}`,
       product,
       {
         headers: {
@@ -117,7 +117,7 @@ export const updateProduct = async (id: string, product: Partial<Product>) => {
 // DELETE product
 export const deleteProduct = async (id: string): Promise<void> => {
   try {
-    await axios.delete(`${process.env.NEXT_PUBLIC_API_BASE_URL}/product/${id}`);
+    await axios.delete(`${process.env.NEXT_PUBLIC_API_BASE_URL}/Product/${id}`);
   } catch (error) {
     console.error(`Error deleting product with ID ${id}:`, error);
     throw error;
@@ -128,17 +128,17 @@ export const deleteProduct = async (id: string): Promise<void> => {
 export const countProduct = async () => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/products`
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/Product`
     );
 
-    if (Array.isArray(response.data.products)) {
-      return response.data.products.length;
+    if (Array.isArray(response.data)) {
+      return response.data.length;
     } else {
       throw new Error("Unexpected response format");
     }
 
   } catch (error) {
-    console.error("Error fetching products:", error);
+    // console.error("Error fetching products:", error);
     throw error;
   }
 };

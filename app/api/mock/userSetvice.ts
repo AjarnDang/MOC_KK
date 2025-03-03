@@ -18,7 +18,7 @@ export type User = {
 export const fetchUsers = async (): Promise<User[]> => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/users`
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/Username`
     );
     return response.data;
   } catch (error) {
@@ -31,7 +31,7 @@ export const fetchUsers = async (): Promise<User[]> => {
 export const fetchPostById = async (id: string): Promise<User> => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/users/${id}`
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/Username/${id}`
     );
     return response.data;
   } catch (error) {
@@ -46,7 +46,7 @@ export const createUser = async (
 ): Promise<User> => {
   try {
     const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/users`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/Username`,
       users
     );
     return response.data;
@@ -60,7 +60,7 @@ export const createUser = async (
 export const updateUser = async (id: string, users: Partial<User>) => {
   try {
     const response = await axios.put(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/users/${id}`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/Username/${id}`,
       users,
       {
         headers: {
@@ -88,7 +88,7 @@ export const updateUser = async (id: string, users: Partial<User>) => {
 // DELETE users
 export const deleteUser = async (id: string): Promise<void> => {
   try {
-    await axios.delete(`${process.env.NEXT_PUBLIC_API_BASE_URL}/users/${id}`);
+    await axios.delete(`${process.env.NEXT_PUBLIC_API_BASE_URL}/Username/${id}`);
   } catch (error) {
     console.error(`Error deleting users with ID ${id}:`, error);
     throw error;
@@ -99,17 +99,17 @@ export const deleteUser = async (id: string): Promise<void> => {
 export const countUser = async () => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/users`
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/Username`
     );
 
-    if (Array.isArray(response.data.users)) {
-      return response.data.users.length;
+    if (Array.isArray(response.data)) {
+      return response.data.length;
     } else {
       throw new Error("Unexpected response format");
     }
 
   } catch (error) {
-    console.error("Error fetching users:", error);
+    // console.error("Error fetching users:", error);
     throw error;
   }
 };

@@ -36,39 +36,36 @@ export default function AuthNavbar() {
           </Sidebar>
         </Drawer.Items>
       </Drawer>
+
       <Navbar
         fluid
         rounded
         className={`fixed top-0 left-0 w-full z-40 md:shadow-sm shadow-lg bg-white`}
       >
-        <Navbar.Brand as={Link} href="/home">
-          <Image
-            src={Logo}
-            width={0}
-            height={0}
-            className="mr-3 w-10"
-            alt="Logo"
-          />
-          <span className="self-center whitespace-nowrap leading-4 font-semibold dark:text-white">
-            กระทรวงพาณิชย์
-            <br />
-            จังหวัดขอนแก่น
-          </span>
-          <button
-          className="xl:hidden lg:flex md:flex hidden pl-10 text-gray-500 hover:text-gray-700 focus:outline-none mr-4"
-          onClick={() => setIsOpen(true)}
-        >
-          ☰
-        </button>
+        <div className="flex items-center gap-2">
+          <Navbar.Brand as={Link} href="/home">
+            <Image
+              src={Logo}
+              width={0}
+              height={0}
+              className="mr-3 w-10"
+              alt="Logo"
+            />
+            <span className="self-center whitespace-nowrap leading-4 font-semibold dark:text-white">
+              กระทรวงพาณิชย์
+              <br />
+              จังหวัดขอนแก่น
+            </span>
+          </Navbar.Brand>
           <button
             className="lg:hidden md:flex hidden pl-6 text-gray-500 hover:text-gray-700 focus:outline-none"
             onClick={() => setIsOpen(true)}
           >
             <HiMenuAlt2 size={20} />
           </button>
-        </Navbar.Brand>
+        </div>
         <button
-          className="md:hidden flex md:hidden flex pl-6 text-gray-500 hover:text-gray-700 focus:outline-none"
+          className="md:hidden flex pl-6 text-gray-500 hover:text-gray-700 focus:outline-none"
           onClick={() => setIsOpen(true)}
         >
           <HiMenuAlt3 size={20} />

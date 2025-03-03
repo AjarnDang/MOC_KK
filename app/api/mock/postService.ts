@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import axios from "axios";
 
 export type Post = {
@@ -7,108 +10,99 @@ export type Post = {
   tags: string[];
   reactions: {
     likes: number;
-    dislikes: number
+    dislikes: number;
   };
   views: number;
   userId: number;
 };
 
-// GET post
+// Mock Data
+const mockPosts: Post[] = [
+  {
+    id: 1,
+    title: "Introduction to TypeScript",
+    body: "TypeScript is a superset of JavaScript that adds static typing.",
+    tags: ["typescript", "javascript", "programming"],
+    reactions: { likes: 120, dislikes: 3 },
+    views: 540,
+    userId: 101,
+  },
+  {
+    id: 2,
+    title: "Understanding React Hooks",
+    body: "React Hooks allow functional components to use state and lifecycle features.",
+    tags: ["react", "hooks", "frontend"],
+    reactions: { likes: 98, dislikes: 5 },
+    views: 620,
+    userId: 102,
+  },
+  {
+    id: 3,
+    title: "Node.js Performance Optimization",
+    body: "Improving performance in Node.js applications through best practices.",
+    tags: ["nodejs", "backend", "performance"],
+    reactions: { likes: 85, dislikes: 2 },
+    views: 410,
+    userId: 103,
+  },
+];
+
+// Replace API Base URL
+const API_BASE_URL = "https://mockapi.example.com";
+
+// GET all posts (Mocked)
 export const fetchPosts = async (): Promise<Post[]> => {
-  try {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/posts`
-    );
-    return response.data.posts;
-  } catch (error) {
-    console.error("Error fetching posts:", error);
-    throw error;
-  }
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(mockPosts), 500); // Simulating API delay
+  });
 };
 
-// GET post by ID
+// GET post by ID (Mocked)
 export const fetchPostById = async (id: string): Promise<Post> => {
-  try {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/post/${id}`
-    );
-    return response.data;
-  } catch (error) {
-    console.error(`Error fetching post with ID ${id}:`, error);
-    throw error;
-  }
+  return new Promise((resolve, reject) => {
+    const post = mockPosts.find((p) => p.id === Number(id));
+    post ? resolve(post) : reject(new Error(`Post with ID ${id} not found`));
+  });
 };
 
-// ADD post
-export const createPost = async (
-  post: Omit<Post, "id">
-): Promise<Post> => {
-  try {
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/post`,
-      post
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error creating post:", error);
-    throw error;
-  }
+// ADD post (Mocked)
+export const createPost = async (post: Omit<Post, "id">): Promise<Post> => {
+  return new Promise((resolve) => {
+    const newPost = { ...post, id: mockPosts.length + 1 };
+    mockPosts.push(newPost);
+    resolve(newPost);
+  });
 };
 
-// UPDATE post
-export const updatePost = async (id: string, post: Partial<Post>) => {
-  try {
-    const response = await axios.put(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/posts/${id}`,
-      post,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    console.log(`Update response:`, response.data);
-    return response.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.error(
-        `Axios error updating post with ID ${id}:`,
-        error.response?.data || error.message
-      );
+// UPDATE post (Mocked)
+export const updatePost = async (id: string, post: Partial<Post>): Promise<Post> => {
+  return new Promise((resolve, reject) => {
+    const index = mockPosts.findIndex((p) => p.id === Number(id));
+    if (index !== -1) {
+      mockPosts[index] = { ...mockPosts[index], ...post };
+      resolve(mockPosts[index]);
     } else {
-      console.error(`Unexpected error updating post with ID ${id}:`, error);
+      reject(new Error(`Failed to update post with ID ${id}`));
     }
-    throw new Error(
-      `Failed to update post with ID ${id}. Please try again.`
-    );
-  }
+  });
 };
 
-// DELETE post
+// DELETE post (Mocked)
 export const deletePost = async (id: string): Promise<void> => {
-  try {
-    await axios.delete(`${process.env.NEXT_PUBLIC_API_BASE_URL}/post/${id}`);
-  } catch (error) {
-    console.error(`Error deleting post with ID ${id}:`, error);
-    throw error;
-  }
+  return new Promise((resolve, reject) => {
+    const index = mockPosts.findIndex((p) => p.id === Number(id));
+    if (index !== -1) {
+      mockPosts.splice(index, 1);
+      resolve();
+    } else {
+      reject(new Error(`Post with ID ${id} not found`));
+    }
+  });
 };
 
-// COUNT post
-export const countPost = async () => {
-  try {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/posts`
-    );
-
-    if (Array.isArray(response.data.posts)) {
-      return response.data.posts.length;
-    } else {
-      throw new Error("Unexpected response format");
-    }
-
-  } catch (error) {
-    console.error("Error fetching posts:", error);
-    throw error;
-  }
+// COUNT posts (Mocked)
+export const countPost = async (): Promise<number> => {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(mockPosts.length), 300);
+  });
 };

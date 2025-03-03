@@ -141,24 +141,21 @@ const ProductManage = () => {
       <h1 className="mt-4 font-bold text-2xl">จัดการสินค้า</h1>
       <div className="mt-4 grid lg:grid-cols-4 grid-cols-1 lg:gap-6 gap-4">
         <div className="col-span-1">
-          {productDetail.images.map((image: string, index: Key) => (
-            <img
-              key={index}
-              src={image}
-              alt={`${productDetail.title} - Image`}
-              className="w-full h-auto object-cover border border-gray-200 rounded-lg"
-            />
-          ))}
+          <img
+            src={productDetail.image}
+            alt={`${productDetail.product} - Image`}
+            className="w-full h-auto object-cover border border-gray-200 rounded-lg"
+          />
         </div>
         <div className="col-span-3">
           <form onSubmit={handleUpdate} className="max-w-sm">
             <div className="mb-4">
               <label>ชื่อสินค้า</label>
               <input
-                id="title"
+                id="product"
                 type="text"
-                value={productDetail.title}
-                onChange={(e) => handleInputChange("title", e.target.value)}
+                value={productDetail.product}
+                onChange={(e) => handleInputChange("product", e.target.value)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block max-w-sm min-w-96 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="name@flowbite.com"
                 required

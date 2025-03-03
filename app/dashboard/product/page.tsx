@@ -142,7 +142,7 @@ const ProductTable: React.FC = () => {
           </Table.HeadCell>
           <Table.HeadCell>รูปภาพ</Table.HeadCell>
           <Table.HeadCell
-            onClick={() => handleSort("title", "string")}
+            onClick={() => handleSort("product", "string")}
             className="cursor-pointer gap-2"
           >
             <span className="flex gap-2">
@@ -196,19 +196,19 @@ const ProductTable: React.FC = () => {
           </Table.Cell>
           <Table.Cell>
             <img
-              src={product.thumbnail}
-              alt={product.title}
+              src={product.image}
+              alt={product.product}
               className="w-16 h-auto object-cover object-center rounded-lg"
             />
           </Table.Cell>
-          <Table.Cell>{product.title}</Table.Cell>
-          <Table.Cell>{product.category}</Table.Cell>
+          <Table.Cell>{product.product}</Table.Cell>
+          <Table.Cell>{product.adj}</Table.Cell>
           <Table.Cell>{product.price}</Table.Cell>
-          <Table.Cell>{product.stock}</Table.Cell>
-          <Table.Cell>{product.availabilityStatus}</Table.Cell>
+          <Table.Cell>-</Table.Cell>
+          <Table.Cell>-</Table.Cell>
           <Table.Cell>
             <Link
-              href={`/dashboard/product/${product.id}?name=${product.title}`}
+              href={`/dashboard/product/${product.id}?name=${product.product}`}
               className="font-medium text-cyan-600 hover:underline dark:text-cyan-500 mr-4"
             >
               จัดการ

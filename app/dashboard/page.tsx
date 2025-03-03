@@ -6,13 +6,13 @@ import AreaChart from "../components/ApexChart/AreaChart";
 import PieChart from "../components/ApexChart/PieChart";
 import { ActivityTable } from "../components/DataTable/ActivityLogTable";
 import { countProduct } from "../api/mock/productService";
-import { countPost } from "../api/mock/postService";
+// import { countPost } from "../api/mock/postService";
 import { countUser } from "../api/mock/userSetvice";
 import { Card } from "flowbite-react";
 
 export default function Dashboard() {
   const [countProducts, setCountProducts] = useState(0);
-  const [countPosts, setCountPosts] = useState(0);
+  // const [countPosts, setCountPosts] = useState(0);
   const [countUsers, setCountUsers] = useState(0);
   const seriesArea = [
     {
@@ -54,14 +54,14 @@ export default function Dashboard() {
       }
     };
 
-    const getCountPost = async () => {
-      try {
-        const data = await countPost();
-        setCountPosts(data);
-      } catch (err) {
-        console.log("err", err);
-      }
-    };
+    // const getCountPost = async () => {
+    //   try {
+    //     const data = await countPost();
+    //     setCountPosts(data);
+    //   } catch (err) {
+    //     console.log("err", err);
+    //   }
+    // };
 
     const getCountUser = async () => {
       try {
@@ -74,7 +74,7 @@ export default function Dashboard() {
 
     getCountUser()
     getCountProduct();
-    getCountPost();
+    // getCountPost();
   });
 
   return (
@@ -104,7 +104,7 @@ export default function Dashboard() {
             </p>
 
             <h5 className="text-5xl font-bold tracking-tight text-purple-700">
-            {countPosts !== null ? countPosts : "Loading..."}
+            {/* {countPosts !== null ? countPosts : "Loading..."} */}0
             </h5>
           </div>
           <div className="pl-6">
