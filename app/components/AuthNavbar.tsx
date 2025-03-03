@@ -69,9 +69,15 @@ export default function AuthNavbar() {
             <br />
             จังหวัดขอนแก่น
           </span>
+          <button
+          className="xl:hidden lg:flex md:flex hidden pl-10 text-gray-500 hover:text-gray-700 focus:outline-none mr-4"
+          onClick={() => setIsOpen(true)}
+        >
+          ☰
+        </button>
         </Navbar.Brand>
         <button
-          className="lg:hidden pl-10 text-gray-500 hover:text-gray-700 focus:outline-none mr-4"
+          className="md:hidden flex pl-10 text-gray-500 hover:text-gray-700 focus:outline-none mr-4"
           onClick={() => setIsOpen(true)}
         >
           ☰
