@@ -3,18 +3,14 @@
 
 import React, { useEffect, useState } from "react";
 import { Spinner, Table } from "flowbite-react";
-import {
-  fetchProducts,
-  deleteProduct,
-  Product,
-} from "@/app/api/mock/productService";
+import { fetchPosts, deletePost, Post } from "@/app/api/mock/postService";
 import DataTable from "@/app/components/DataTable/DataTable";
 import { HiSwitchVertical } from "react-icons/hi";
 import Link from "next/link";
 import Swal from "sweetalert2";
 
-const ProductTable: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+const PostTable: React.FC = () => {
+  const [posts, setPosts] = useState<Post[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [sortConfig, setSortConfig] = useState<{
     key: string;
@@ -24,22 +20,22 @@ const ProductTable: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const getProducts = async () => {
+    const getPosts = async () => {
       try {
-        const data = await fetchProducts();
-        setProducts(data);
+        const data = await fetchPosts();
+        setPosts(data);
       } catch (err) {
-        setError("Failed to fetch products. Please try again later.");
-        console.error("Error fetching products:", err);
+        setError("Failed to fetch posts. Please try again later.");
+        console.error("Error fetching posts:", err);
       } finally {
         setLoading(false);
       }
     };
 
-    getProducts();
+    getPosts();
   }, []);
 
-  const handleDelete = async (productId: number) => {
+  const handleDelete = async (postId: number) => {
     try {
       const result = await Swal.fire({
         title: "คุณต้องการลบข้อมูลนี้หรือไม่ ?",
@@ -53,8 +49,8 @@ const ProductTable: React.FC = () => {
       });
 
       if (result.isConfirmed) {
-        await deleteProduct(productId.toString());
-        setProducts((prev) => prev.filter((p) => p.id !== productId));
+        await deletePost(postId.toString());
+        setPosts((prev) => prev.filter((p) => p.id !== postId));
 
         await Swal.fire({
           title: "ลบข้อมูลสำเร็จ",
@@ -82,22 +78,22 @@ const ProductTable: React.FC = () => {
         : "asc";
     setSortConfig({ key, direction });
 
-    setProducts((prev) => {
+    setPosts((prev) => {
       const sorted = [...prev].sort((a, b) => {
         if (type === "number") {
           return direction === "asc"
-            ? (a[key as keyof Product] as number) -
-                (b[key as keyof Product] as number)
-            : (b[key as keyof Product] as number) -
-                (a[key as keyof Product] as number);
+            ? (a[key as keyof Post] as number) -
+                (b[key as keyof Post] as number)
+            : (b[key as keyof Post] as number) -
+                (a[key as keyof Post] as number);
         }
         if (type === "string") {
           return direction === "asc"
-            ? String(a[key as keyof Product]).localeCompare(
-                String(b[key as keyof Product])
+            ? String(a[key as keyof Post]).localeCompare(
+                String(b[key as keyof Post])
               )
-            : String(b[key as keyof Product]).localeCompare(
-                String(a[key as keyof Product])
+            : String(b[key as keyof Post]).localeCompare(
+                String(a[key as keyof Post])
               );
         }
         return 0;
@@ -113,7 +109,7 @@ const ProductTable: React.FC = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-96 bg-opacity-5">
-        <Spinner size="lg" aria-label="Loading products..." />
+        <Spinner size="lg" aria-label="Loading posts..." />
       </div>
     );
   }
@@ -124,48 +120,47 @@ const ProductTable: React.FC = () => {
 
   return (
     <DataTable
-      data={products}
+      data={posts}
       currentPage={currentPage}
-      totalPages={Math.ceil(products.length / 10)}
+      totalPages={Math.ceil(posts.length / 10)}
       onPageChange={setCurrentPage}
       onClearFilters={handleClearFilters}
       renderHead={() => (
         <>
           <Table.HeadCell
             onClick={() => handleSort("id", "number")}
-            className="cursor-pointer flex gap-2"
+            className="cursor-pointer"
           >
             <span className="flex gap-2">
               <HiSwitchVertical fontSize={16} />
-              รหัสสินค้า
+              รหัสข่าว
             </span>
           </Table.HeadCell>
-          <Table.HeadCell>รูปภาพ</Table.HeadCell>
           <Table.HeadCell
             onClick={() => handleSort("title", "string")}
-            className="cursor-pointer gap-2"
+            className="cursor-pointer"
           >
             <span className="flex gap-2">
               <HiSwitchVertical fontSize={16} />
-              ชื่อสินค้า
+              หัวข้อ
             </span>
           </Table.HeadCell>
           <Table.HeadCell
             onClick={() => handleSort("category", "string")}
-            className="cursor-pointer gap-2"
+            className="cursor-pointer"
           >
             <span className="flex gap-2">
               <HiSwitchVertical fontSize={16} />
-              หมวดหมู่
+              รายละเอียด
             </span>
           </Table.HeadCell>
           <Table.HeadCell
             onClick={() => handleSort("price", "number")}
-            className="cursor-pointer gap-2"
+            className="cursor-pointer"
           >
             <span className="flex gap-2">
               <HiSwitchVertical fontSize={16} />
-              ราคา
+              หมวดหมู่
             </span>
           </Table.HeadCell>
           <Table.HeadCell
@@ -174,7 +169,7 @@ const ProductTable: React.FC = () => {
           >
             <span className="flex gap-2">
               <HiSwitchVertical fontSize={16} />
-              สต็อก
+              ยอดเข้าชม
             </span>
           </Table.HeadCell>
           <Table.HeadCell
@@ -183,38 +178,57 @@ const ProductTable: React.FC = () => {
           >
             <span className="flex gap-2">
               <HiSwitchVertical fontSize={16} />
-              สถานะ
+              รหัสผู้โพสต์
             </span>
           </Table.HeadCell>
           <Table.HeadCell>จัดการ</Table.HeadCell>
         </>
       )}
-      renderRow={(product) => (
+      renderRow={(post) => (
         <>
           <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-            {product.id}
+            {post.id}
           </Table.Cell>
+          <Table.Cell className="truncate ... max-w-52">
+            {post.title}
+          </Table.Cell>
+          <Table.Cell className="truncate ... max-w-72">{post.body}</Table.Cell>
           <Table.Cell>
-            <img
-              src={product.thumbnail}
-              alt={product.title}
-              className="w-16 h-auto object-cover object-center rounded-lg"
-            />
+            {post.tags.map((tag, index) => {
+              const tagColors: Record<string, string> = {
+                history: "bg-purple-700",
+                crime: "bg-red-700",
+                american: "bg-blue-700",
+                french: "bg-green-700",
+                english: "bg-cyan-700",
+                mystery: "bg-yellow-500",
+                magical: "bg-purple-500",
+                default: "bg-gray-700",
+              };
+
+              const tagColor = tagColors[tag] || tagColors.default;
+
+              return (
+                <span
+                  key={index}
+                  className={`px-3 py-1 text-sm text-white capitalize rounded-full mr-1 ${tagColor}`}
+                >
+                  {tag}
+                </span>
+              );
+            })}
           </Table.Cell>
-          <Table.Cell>{product.title}</Table.Cell>
-          <Table.Cell>{product.category}</Table.Cell>
-          <Table.Cell>{product.price}</Table.Cell>
-          <Table.Cell>{product.stock}</Table.Cell>
-          <Table.Cell>{product.availabilityStatus}</Table.Cell>
+          <Table.Cell>{post.views}</Table.Cell>
+          <Table.Cell>{post.userId}</Table.Cell>
           <Table.Cell>
             <Link
-              href={`/dashboard/product/${product.id}?name=${product.title}`}
+              href={`/dashboard/post/${post.id}?name=${post.title}`}
               className="font-medium text-cyan-600 hover:underline dark:text-cyan-500 mr-4"
             >
               จัดการ
             </Link>
             <button
-              onClick={() => handleDelete(product.id)}
+              onClick={() => handleDelete(post.id)}
               className="font-medium text-red-600 hover:underline dark:text-red-500"
             >
               ลบ
@@ -226,4 +240,4 @@ const ProductTable: React.FC = () => {
   );
 };
 
-export default ProductTable;
+export default PostTable;
