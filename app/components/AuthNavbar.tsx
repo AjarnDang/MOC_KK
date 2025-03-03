@@ -8,7 +8,6 @@ import { useSession, signOut } from "next-auth/react";
 import { useState } from "react";
 import { SidebarLinks } from "../api/mock/SidebarLink";
 import { HiMenuAlt2, HiMenuAlt3 } from "react-icons/hi";
-import { HiMenuAlt2, HiMenuAlt3 } from "react-icons/hi";
 
 export default function AuthNavbar() {
   const { data: session } = useSession();
