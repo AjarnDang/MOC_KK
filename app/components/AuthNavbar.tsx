@@ -54,11 +54,12 @@ export default function AuthNavbar() {
             <br />
             จังหวัดขอนแก่น
           </span>
-          <button
-          className="xl:hidden lg:flex md:flex hidden pl-10 text-gray-500 hover:text-gray-700 focus:outline-none mr-4"
+        </Navbar.Brand>
+        <button
+          className="md:hidden flex md:hidden flex pl-6 text-gray-500 hover:text-gray-700 focus:outline-none"
           onClick={() => setIsOpen(true)}
         >
-          ☰
+          <HiMenuAlt3 size={20} />
         </button>
           <button
             className="lg:hidden md:flex hidden pl-6 text-gray-500 hover:text-gray-700 focus:outline-none"
